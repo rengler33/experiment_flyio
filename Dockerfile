@@ -85,7 +85,7 @@ RUN poetry install --only main
 # #### PRODUCTION-IMAGE #### #
 # uses a smaller version of python image and doesn't need poetry
 # instead copies venv from pre-production-build
-FROM python:3.10-alpine as production-image
+FROM python:3.10-slim as production-image
 
 ENV VIRTUAL_ENV="/venvs/venv"
 # put the virtual env at front of path so it doesn't need to be activated
@@ -98,5 +98,5 @@ COPY --from=pre-production-build /venvs /venvs
 COPY ./app /application_root/app/
 WORKDIR /application_root/app
 
-EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0"]
+EXPOSE 8080
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
