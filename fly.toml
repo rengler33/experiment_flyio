@@ -1,6 +1,6 @@
-# fly.toml file generated for still-butterfly-4489 on 2022-09-04T10:08:03-04:00
+# fly.toml file generated for re3 on 2022-09-05T09:18:47-04:00
 
-app = "still-butterfly-4489"
+app = "re3"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
