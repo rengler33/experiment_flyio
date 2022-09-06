@@ -1,20 +1,18 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, Table, Text
+from sqlalchemy.orm import registry
 
-from app import settings
+from app.dreams.models import Dream
 
-SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base = declarative_base()
+mapper_registry = registry()
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+dream_table = Table(
+    "dreams",
+    mapper_registry.metadata,
+    Column("id", Integer, primary_key=True, index=True),
+    Column("description", Text),
+)
+
+
+def start_mappers():
+    mapper_registry.map_imperatively(Dream, dream_table)
